@@ -43,10 +43,6 @@ regressor.fit(poly_feature, y_train)
 print('Model Created Successfully...')
 print('The Intercept is:', regressor.intercept_)
 
-loss = log_loss(X_test, regressor.predict_proba(X_test), eps=1e-15)
-print("The Loss is "loss)
-
-
 #making predictions using the model
 #predictions = regressor.predict(np.array([101]).reshape(1,-1))
 predictions = regressor.predict(poly_predict)
