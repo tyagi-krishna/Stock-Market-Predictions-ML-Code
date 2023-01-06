@@ -34,6 +34,7 @@ poly = PolynomialFeatures(degree=10, include_bias=False)
 poly_feature = poly.fit_transform(X_train)
 poly_feature1 = poly.fit_transform(x)
 poly_predict = poly.fit_transform(x_predict)
+poly_y_test = poly.fit_transform(y_test)
 
 
 # creating and training the linear regression model
@@ -41,6 +42,9 @@ regressor = LinearRegression()
 regressor.fit(poly_feature, y_train)
 print('Model Created Successfully...')
 print('The Intercept is:', regressor.intercept_)
+
+loss = log_loss(X_test, regressor.predict_proba(X_test), eps=1e-15)
+print("The Loss is "loss)
 
 
 #making predictions using the model
@@ -50,10 +54,6 @@ print('The Predicted Value is:',predictions)
 ynew1 = np.append(x, [101])
 ynew = np.array(ynew1).reshape((-1,1))
 predicted = np.append(y, [predictions])
-
-# testing the effectiveness of the model using rmse value 
-y_pred = regressor.predict(poly_feature1)
-#print('The RMSE Value of Model is: (Should be less than 1 for the Model to be Effective)', np.sqrt(metrics.mean_squared_error(y_test, y_pred))) # if value is less than 1 then model can be used but we preffer a value under 0.8
 
 # creating array to store all the predicted values
 predicted_y = regressor.predict(poly_feature1)
